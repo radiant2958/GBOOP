@@ -1,32 +1,35 @@
-package MyNote;
+package MyNote.UI;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class Console {
+import MyNote.Presenter;
+import MyNote.Record;
+
+public class Menu {
     
     private Scanner scanner;
-    View view = new ConsoleView();
-    Presenter presenter;
+    private ConsoleView view;
+    private Presenter presenter;
 
-    public Console(Presenter presenter) {
+    public Menu(Presenter presenter, ConsoleView view) {
         this.presenter = presenter;
+        this.view = view;
         scanner = new Scanner(System.in);
     }
-
     public void start() {
         while (true) {
             System.out.println("Выберите команду:");
             System.out.println("1 - добавить запись");
             System.out.println("2 - вывести список записей");
+            System.out.println("3 - удалить запись");
 
             int command = scanner.nextInt();
-            scanner.nextLine(); // очищаем буфер после считывания числа
+            scanner.nextLine(); 
 
             switch (command) {
                 case 1:
-                    System.out.print("Введите текст записи: ");
-                    String text = scanner.nextLine();
+                    String text = view.getText();
                     presenter.addRecord(text);
                     break;
                 case 2:
@@ -34,19 +37,24 @@ public class Console {
                     if (records.isEmpty()) {
                         System.out.println("Нет записей");
                     } else {
-                        System.out.println("Список записей:");
-                        for (Record record : records) {
-                            System.out.println(record.getText());
-                        }
+                        view.printNoteBook(records);
                     }
                     break;
+                case 3:
+                    List<Record> recordss = presenter.getAll();
+                if (recordss.isEmpty()) {
+                    System.out.println("Нет записей");
+                } else {
+                   
+                    presenter.removeRecord();
+                    System.out.println("Запись удалена");
+                }
+                break;
                 default:
                     System.out.println("Неверная команда");
             }
         }
     }
 
-    public void showRecordAdded() {
-        System.out.println("Запись добавлена");
-    }
+
 }

@@ -3,31 +3,35 @@ package MyNote;
 import java.util.List;
 
 
+import MyNote.UI.View;
+
+
 
 public class Presenter {
     private Model model;
-    private ConsoleView view = new ConsoleView();
+    private View view;
 
     public Presenter(Model model, View view) {
         this.model = model;
-        this.view = (ConsoleView) view;
+        this.view = view;
     }
 
-    public void addRecord(String text){
-        model.getRecords().add(new Record(text));
-        model.save();
+    public void addRecord(String volue){
+        model.addRecord(volue);
         view.showRecordAdded();
+       
+    }
+
+    public List<Record> getAll(){
+        return model.getRecords();
     }
     
-    public List<Record> getAll(){
-        return model.getAll();
+    public void removeRecord() {
+        int index=view.getIndex();
+        model.removeRecord(index);   
     }
-    public void save(){
-        model.save();
-    }
-    public void load() {
-        model.load();
-        
-    }
+ 
+   
+    
 
 }

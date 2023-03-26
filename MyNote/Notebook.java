@@ -8,14 +8,12 @@ public class Notebook {
     public Notebook(){
         notes=new ArrayList<Record>();
     }
-    
-    public void add(Record record) {
-    }
-
-        
+          
     public List<Record> getNotes() {
         return notes;
     }
-    
+    public void setNotes(List<Record> notes) {
+        this.notes = notes;
+    }
 
 }
